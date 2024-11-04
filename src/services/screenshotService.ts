@@ -6,17 +6,18 @@ import FileModel from '../models/fileModel';
 import fileService from './fileService';
 import fileType from 'file-type';
 import * as Utils from '../utils/utils';
+import { uploadPhoto } from './cloudinaryService';
 
 dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-const takeScreenshot = async (url: string, fileName: string): Promise<string> => {
+const takeScreenshot = async (url: string, fileName: string): Promise<FileModel> => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
 
-  // Configura la ruta donde se guardará la imagen
+  // configura la ruta donde se guardará la imagen
   let filePath;
   if (NODE_ENV == 'production') {
     filePath = path.join(__dirname, '../public/screenshots', fileName);
@@ -27,22 +28,10 @@ const takeScreenshot = async (url: string, fileName: string): Promise<string> =>
 
   await page.screenshot({ path: filePath });
 
-  const stats = fs.statSync(filePath);
-  const fileSize = stats.size;
-  const fileUrl = Utils.generateStaticUrl(`screenshots/${fileName}`);
-  const fileTypeMime = await fileType.fromFile(filePath);
-
-  const newFile: FileModel = {
-    size: fileSize,
-    mimeType: fileTypeMime?.mime,
-    path: filePath,
-    url: fileUrl
-  }
-
-  await fileService.create(newFile);
+  const newFile = await uploadPhoto({ filePath: filePath, folderName: 'screenshots' });
 
   await browser.close();
-  return fileUrl;
+  return newFile;
 };
 
 export default takeScreenshot;

@@ -10,7 +10,7 @@ export async function createTool(req: Request, res: Response) {
   const body: CreateToolFormData = req.body;
   try {
     const newToolId = new ObjectId();
-    const screenshotPath = await takeScreenshot(body.url, `${newToolId.toString()}.png`);
+    const screenshotFile = await takeScreenshot(body.url, `${newToolId.toString()}.png`);
     const data = await toolService.create({
       _id: newToolId,
       summary: body.summary,
@@ -18,7 +18,7 @@ export async function createTool(req: Request, res: Response) {
       url: body.url,
       description: body.description,
       isFavorite: false,
-      cover: screenshotPath,
+      coverUrl: screenshotFile.url,
       categories: body.categories,
       tags: body.tags.toLocaleLowerCase().split(','),
       created_at: new Date()
@@ -30,10 +30,10 @@ export async function createTool(req: Request, res: Response) {
       message: 'The resource was successfully created.',
     }
     res.status(200).send(response);
-  } catch (err) {
+  } catch (err: any) {
     const response: ResponseAPI = {
       success: false,
-      error: `${err}`,
+      error: `${err?.message}`,
       message: 'An unexpected error occurred. Please try again later.',
     }
     res.status(500).send(response);

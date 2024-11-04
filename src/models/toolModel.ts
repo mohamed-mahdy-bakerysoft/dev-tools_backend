@@ -6,7 +6,7 @@ export default interface ToolModel {
   title: string;
   summary: string;
   description: string;
-  cover: string;
+  coverUrl: string;
   categories: CategoryModel[];
   tags: string[];
   isFavorite: boolean;

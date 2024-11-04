@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import fileType from 'file-type';
 import { ResponseAPI } from '../models/responseAPI';
 import * as Utils from '../utils/utils';
+import { uploadPhoto } from '../services/cloudinaryService';
 
 // const file = require('file-type') as typeof import('file-type');
 
@@ -65,22 +66,9 @@ export async function uploadIconCategoryMiddleware(req: Request, res: Response, 
           return res.status(500).send(response);
         }
 
-        const stats = fs.statSync(req.file.path);
-        const fileName = req.file.filename;
-        const fileSize = stats.size;
-        const fileUrl = Utils.generateStaticUrl(`uploads/icons/${fileName}`);
-        const fileTypeMime = await fileType.fromFile(req.file.path);
-
-        const newFile: FileModel = {
-          size: fileSize,
-          mimeType: fileTypeMime?.mime,
-          path: req.file.path,
-          url: fileUrl
-        }
-
+        const newFile = await uploadPhoto({ filePath: req.file.path, folderName: 'icons' });
         req.body.fileUploaded = newFile;
 
-        await fileService.create(newFile);
         next();
       } catch (err) {
         next(err);

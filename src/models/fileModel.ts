@@ -5,5 +5,6 @@ export default interface FileModel {
   mimeType: string | undefined;
   size: number;
   path: string;
+  cloudPath?: string;
   url: string;
 }
