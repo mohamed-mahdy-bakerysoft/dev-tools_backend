@@ -1,7 +1,5 @@
 import dotenv from 'dotenv';
 
-dotenv.config();
-
 const SERVER_HOST = process.env.HOST || 'localhost';
 const SERVER_PORT = parseInt(process.env.SERVER_PORT || '3000');
 

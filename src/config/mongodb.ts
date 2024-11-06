@@ -1,7 +1,4 @@
 import mongodb, { MongoClient } from "mongodb";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const DATABASE_PORT = process.env.DATABASE_PORT;
 const DATABASE_HOST = process.env.DATABASE_HOST;

@@ -8,8 +8,6 @@ import fileType from 'file-type';
 import * as Utils from '../utils/utils';
 import { uploadPhoto } from './cloudinaryService';
 
-dotenv.config();
-
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const takeScreenshot = async (url: string, fileName: string): Promise<FileModel> => {

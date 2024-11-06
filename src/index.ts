@@ -1,8 +1,9 @@
-import app from './app';
+import path from 'path';
 import dotenv from 'dotenv';
-import { connectMongoDB } from './config/mongodb';
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
-dotenv.config();
+import app from './app';
+import { connectMongoDB } from './config/mongodb';
 
 const SERVER_HOST = process.env.HOST || 'localhost';
 const SERVER_PORT = parseInt(process.env.PORT || '3000');

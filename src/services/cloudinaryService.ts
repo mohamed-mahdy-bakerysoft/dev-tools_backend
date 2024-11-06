@@ -5,8 +5,6 @@ import fileType from 'file-type';
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary';
 import FileModel from '../models/fileModel';
 
-dotenv.config();
-
 const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;

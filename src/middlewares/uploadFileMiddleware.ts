@@ -12,7 +12,6 @@ import { uploadPhoto } from '../services/cloudinaryService';
 
 // const file = require('file-type') as typeof import('file-type');
 
-dotenv.config();
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // config storage

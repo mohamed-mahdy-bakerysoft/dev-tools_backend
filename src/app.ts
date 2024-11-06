@@ -6,9 +6,9 @@ import path from 'path';
 import cors from 'cors';
 import errorHandler from './middlewares/errorHandler';
 
-const app = express();
+dotenv.config({ path: '../.env' });
 
-dotenv.config();
+const app = express();
 
 const API_VERSION = process.env.API_VERSION;
 const NODE_ENV = process.env.NODE_ENV || 'development';
