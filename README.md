@@ -28,7 +28,6 @@ npm install
 ```
 
 ### How to use it? 💡
-* Run the seeder
 1. Run the application
 ```ssh
 npm run dev
