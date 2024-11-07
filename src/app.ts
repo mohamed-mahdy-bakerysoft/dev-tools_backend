@@ -1,12 +1,9 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import toolRoutes from './routes/toolRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 import path from 'path';
 import cors from 'cors';
 import errorHandler from './middlewares/errorHandler';
-
-dotenv.config({ path: '../.env' });
 
 const app = express();
 

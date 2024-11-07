@@ -1,7 +1,7 @@
 {
   "name": "dev-tools_backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc && cp -r './public' './dist/public'",
     "dev": "ts-node-dev src/index.ts",
@@ -20,13 +20,13 @@
     "file-type": "^16.5.4",
     "mongodb": "^6.10.0",
     "multer": "1.4.5-lts.1",
-    "puppeteer": "^23.6.0"
+    "puppeteer": "^23.7.0"
   },
   "devDependencies": {
-    "typescript": "^5.6.3",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/multer": "^1.4.12",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.6.3"
   }
 }

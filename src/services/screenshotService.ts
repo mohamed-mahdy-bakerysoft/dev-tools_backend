@@ -1,11 +1,6 @@
-import dotenv from 'dotenv';
 import puppeteer from 'puppeteer';
 import path from 'path';
-import fs from 'fs';
 import FileModel from '../models/fileModel';
-import fileService from './fileService';
-import fileType from 'file-type';
-import * as Utils from '../utils/utils';
 import { uploadPhoto } from './cloudinaryService';
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -21,7 +16,6 @@ const takeScreenshot = async (url: string, fileName: string): Promise<FileModel>
     filePath = path.join(__dirname, '../public/screenshots', fileName);
   } else {
     filePath = path.join(__dirname, '../../public/screenshots', fileName);
-
   }
 
   await page.screenshot({ path: filePath });

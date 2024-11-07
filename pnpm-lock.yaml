@@ -30,7 +30,7 @@ importers:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
       puppeteer:
-        specifier: ^23.6.0
+        specifier: ^23.7.0
         version: 23.7.0(typescript@5.6.3)
     devDependencies:
       '@types/cors':
