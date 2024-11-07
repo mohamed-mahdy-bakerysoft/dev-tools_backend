@@ -1,14 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import multer, { StorageEngine } from 'multer';
 import path from 'path';
-import FileModel from '../models/fileModel';
-import fileService from '../services/fileService';
-import fs from 'fs';
-import dotenv from 'dotenv';
-import fileType from 'file-type';
 import { ResponseAPI } from '../models/responseAPI';
-import * as Utils from '../utils/utils';
 import { uploadPhoto } from '../services/cloudinaryService';
+import { CreateCategoryFormData } from '../types/createCategoryFormData';
+import * as utils from '../utils/utils';
 
 // const file = require('file-type') as typeof import('file-type');
 
@@ -46,7 +42,7 @@ const upload = multer({
 
 export const uploadMiddleware = upload.single('file');
 
-export async function uploadIconCategoryMiddleware(req: Request, res: Response, next: NextFunction) {
+export async function uploadIconCategoryMiddleware(req: Request<{}, {}, CreateCategoryFormData>, res: Response, next: NextFunction) {
   const singleUpload = uploadMiddleware;
   singleUpload(req, res, async (err) => {
     if (err) {
@@ -58,6 +54,9 @@ export async function uploadIconCategoryMiddleware(req: Request, res: Response, 
     } else {
       try {
         if (!req.file) {
+          // adjuntar una imagen es opcional
+          next();
+          return;
           const response: ResponseAPI = {
             success: false,
             message: 'An unexpected error occurred. Please try again later.',
@@ -65,9 +64,8 @@ export async function uploadIconCategoryMiddleware(req: Request, res: Response, 
           return res.status(500).send(response);
         }
 
-        const newFile = await uploadPhoto({ filePath: req.file.path, folderName: 'icons' });
-        req.body.fileUploaded = newFile;
-
+        const newFile = await uploadPhoto({ filePath: req.file.path, folderName: 'icons', publicName: utils.toKebabCase(req.body.displayName) });
+        res.locals.fileUploaded = newFile;
         next();
       } catch (err) {
         next(err);

@@ -17,12 +17,12 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET
 });
 
-export async function uploadPhoto({ filePath, folderName }: { filePath: string, folderName: string | undefined }): Promise<FileModel> {
+export async function uploadPhoto({ filePath, folderName, publicName }: { filePath: string, folderName: string | undefined, publicName?: string }): Promise<FileModel> {
   const stats = fs.statSync(filePath);
   const fileSize = stats.size;
   const fileTypeMime = await fileType.fromFile(filePath);
   const fileName = path.basename(filePath);
-  const fileNameWithoutExt = path.basename(filePath, path.extname(filePath));
+  const fileNameWithoutExt = publicName ?? path.basename(filePath, path.extname(filePath));
   const cloudPath = `dev_tools/${folderName}/${fileName}`;
 
   const uploadResult = await cloudinary.uploader

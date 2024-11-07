@@ -3,7 +3,7 @@ import categoryService from "../services/categoryService";
 import { ResponseAPI } from "../models/responseAPI";
 import CategoryModel from "../models/categoryModel";
 import { CreateCategoryFormData } from "../types/createCategoryFormData";
-import * as Utils from '../utils/utils';
+import * as utils from '../utils/utils';
 import FileModel from "../models/fileModel";
 
 interface CreateCategoryUploaded extends CreateCategoryFormData {
@@ -16,11 +16,11 @@ export async function createCategory(req: Request, res: Response) {
     const new_category = {
       displayName: body.displayName,
       index: -1,
-      value: Utils.toKebabCase(body.displayName),
-      iconUrl: body.fileUploaded.url
+      value: utils.toKebabCase(body.displayName),
+      iconUrl: utils.generateStaticUrl('icons/default_category.svg')
     };
     if (req.file) {
-      new_category.iconUrl = body.fileUploaded.url;
+      new_category.iconUrl = res.locals.fileUploaded.url;
     }
     const data = await categoryService.create(new_category);
     const response: ResponseAPI<CategoryModel> = {
